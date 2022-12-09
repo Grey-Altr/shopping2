@@ -33,3 +33,36 @@ function checkError({ data, error }) {
     // eslint-disable-next-line no-console
     return error ? console.error(error) : data;
 }
+
+export async function fetchItems() {
+    const response = await client.from('shoplist').select().match({ user_id: getUser().id });
+
+    return checkError(response);
+}
+
+export async function createListItem(quantity, item) {
+    const response = await client
+        .from('shoplist')
+        .insert({ quantity, item, user_id: client.auth.user().id });
+    return response.data;
+}
+
+export async function getListItems() {
+    const response = await client.from('shoplist').select().match({ user_id: getUser().id });
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
+export async function deleteAllItems() {
+    const response = await client.from('shoplist').delete().match({ user_id: getUser().id });
+    return checkError(response);
+}
+
+export async function buyItem(id) {
+    const response = await client.from('shoplist').update({ complete: true }).match({ id: id });
+
+    return checkError(response);
+}
