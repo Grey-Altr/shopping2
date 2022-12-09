@@ -33,7 +33,6 @@ form.addEventListener('submit', async (e) => {
     }
 
     fetchAndDisplayList();
-    console.log(item);
 });
 
 deleteBtn.addEventListener('click', async () => {
@@ -48,8 +47,8 @@ async function fetchAndDisplayList() {
 
     for (let item of list) {
         const listItemEl = document.createElement('p');
-        // listItemEl.classList.add('list-item');
-        listItemEl.textContent - `${item.quantity} ${item.item}`;
+        listItemEl.classList.add('list-item');
+        listItemEl.textContent = `${item.quantity}: ${item.item}`;
 
         if (item.complete) {
             listItemEl.classList.add('bought');
