@@ -49,7 +49,10 @@ export async function createListItem(quantity, item) {
 
 export async function getListItems() {
     const response = await client.from('shoplist').select().match({ user_id: getUser().id });
+    console.log('response', response);
+
     if (response.error) {
+        // eslint-disable-next-line no-console
         console.error(response.error.message);
     } else {
         return response.data;

@@ -1,7 +1,7 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { buyItem, createListItem, getListItems } from './fetch-utils.js';
+import { buyItem, createListItem, getListItems, deleteAllItems } from './fetch-utils.js';
 
 /* Get DOM Elements */
 const form = document.querySelector('.create-form');
@@ -33,6 +33,12 @@ form.addEventListener('submit', async (e) => {
     }
 
     fetchAndDisplayList();
+    console.log(item);
+});
+
+deleteBtn.addEventListener('click', async () => {
+    await deleteAllItems();
+    await fetchAndDisplayList();
 });
 
 /* Display Functions */
@@ -42,7 +48,7 @@ async function fetchAndDisplayList() {
 
     for (let item of list) {
         const listItemEl = document.createElement('p');
-        listItemEl.classList.add('list-item');
+        // listItemEl.classList.add('list-item');
         listItemEl.textContent - `${item.quantity} ${item.item}`;
 
         if (item.complete) {
